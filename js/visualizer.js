@@ -18,7 +18,8 @@ var Visualizer = {
       display_size: 640,
       display_margin: 50,
       turnsPerSecond: 8,
-      teamColor: ['#455','#c00','#7ac']
+      teamColor: ['#455','#c00','#7ac'],
+      teamColor2: ['#455', '#920', '#779']
     },
     
     setup: function(data) {
@@ -198,6 +199,30 @@ var Visualizer = {
             ctx.arc((j-1)*widthFactor, shipCount*heightFactor, 2, 0, Math.PI*2, true);
             ctx.fill();
         }
+
+
+        var middle = canvas.height / 2;
+        ctx.beginPath();
+        ctx.strokeStyle = "#90A8B0";
+        ctx.moveTo(0, middle);
+        ctx.lineTo(this.moves.length * widthFactor, middle)
+        ctx.stroke();
+        var lastCount, diff, shipCount;
+        for(var i = 1; i <= 2; i++ ){
+            ctx.strokeStyle = this.config.teamColor2[i];
+            ctx.fillStyle = this.config.teamColor2[i];
+            ctx.beginPath();
+            ctx.moveTo(0, middle);
+            lastCount = 0;
+            for(var j=1; j < this.moves.length; j++ ){
+                shipCount = this.moves[j].shipCount[i];
+                diff = (shipCount  - lastCount);
+                ctx.lineTo(j*widthFactor, (diff * heightFactor * 4) + middle);
+                lastCount = shipCount;
+            }
+            ctx.stroke();
+        }
+
         
     },
     
