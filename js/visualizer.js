@@ -12,8 +12,9 @@ var Visualizer = {
     dirtyRegions: [],
     config : {
       planet_font: 'bold 15px Arial,Helvetica',
+      planet_id_font: '8px Helvetica,Arial',
       fleet_font: 'normal 12px Arial,Helvetica',
-      planet_pixels: [10,13,18,21,23,29],
+      planet_pixels: [16,19,22,25,28,31],
       showFleetText: true,
       display_size: 640,
       display_margin: 50,
@@ -75,7 +76,6 @@ var Visualizer = {
         this.drawBackground();
         
         // Draw Planets
-        ctx.font = this.config.planet_font;
         ctx.textAlign = 'center';
         for(var i = 0; i < this.planets.length; i++) {
             var planet = this.planets[i];
@@ -101,7 +101,10 @@ var Visualizer = {
             ctx.fill();
 
             ctx.fillStyle = "#fff";
-            ctx.fillText(planet.numShips, disp_x, this.canvas.height - disp_y + 5);
+            ctx.font = this.config.planet_id_font;
+            ctx.fillText("I:" + i + " G:" + planet.growthRate, disp_x, this.canvas.height - disp_y - 5);
+            ctx.font = this.config.planet_font;
+            ctx.fillText(planet.numShips, disp_x, this.canvas.height - disp_y + 10);
         }
         
         // Draw Fleets
